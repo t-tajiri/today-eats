@@ -21,6 +21,6 @@ public class StepDefinitions {
 
     @Then("今日のご飯が表示される")
     public void 今日のご飯が表示される() {
-        $("#today-eat").should(appear);
+        $("#suggested-eats").should(appear);
     }
 }
