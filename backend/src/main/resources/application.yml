@@ -1,1 +1,9 @@
-
+server:
+  port: 8090
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/today_eats
+    # TODO use non-super user
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
