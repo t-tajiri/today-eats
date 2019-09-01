@@ -2,20 +2,28 @@ apply plugin: 'java'
 sourceCompatibility = 11
 targetCompatibility = 11
 
-group = "hellocucumber"
+group = "ttajiri.todayeats"
 version = "1.0-SNAPSHOT"
 
 def cucumberVersion = '4.7.2'
 def junitVersion = '5.5.1'
+def selenideVersion = '5.2.8'
 
 repositories {
     jcenter()
     mavenCentral()
 }
 
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
 dependencies {
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "com.codeborne:selenide:${selenideVersion}"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
@@ -24,4 +32,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'ttajiri.todayeats', 'src/test/resources']
+        }
+    }
 }
