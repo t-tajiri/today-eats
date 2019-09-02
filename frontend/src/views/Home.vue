@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Button from '@/components/Button.vue'
-import SuggestedEats from '@/components/SuggestedEats'
+import SuggestedEats from '@/components/SuggestedEats.vue'
+import HomeRepository from '@/repository/HomeRepository.js'
 
 export default {
   name: 'Home',
@@ -25,13 +25,8 @@ export default {
   }),
   methods: {
     async decideEats () {
-      const { data } = await axios.get('http://localhost:8090/today-eats', {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': '*'
-        }
-      })
+      const api = new HomeRepository()
+      const { data } = await api.getTodayEats()
       this.eats = data.name
     }
   }
