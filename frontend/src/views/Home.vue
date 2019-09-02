@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Button from '@/components/Button.vue'
 import SuggestedEats from '@/components/SuggestedEats'
 
@@ -23,8 +24,15 @@ export default {
     eats: ''
   }),
   methods: {
-    decideEats () {
-      this.eats = '🍛 カレーライス'
+    async decideEats () {
+      const { data } = await axios.get('http://localhost:8090/today-eats', {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': '*'
+        }
+      })
+      this.eats = data.name
     }
   }
 }

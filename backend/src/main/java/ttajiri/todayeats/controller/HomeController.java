@@ -6,6 +6,7 @@ import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.service.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "today-eats")
 public class HomeController {
     private HomeService service;
