@@ -40,7 +40,7 @@ task cucumber() {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'ttajiri.todayeats', 'src/test/resources/features']
+            args = ['--tags', 'not @develop', '--plugin', 'pretty', '--glue', 'ttajiri.todayeats', 'src/test/resources/features']
         }
     }
 }
