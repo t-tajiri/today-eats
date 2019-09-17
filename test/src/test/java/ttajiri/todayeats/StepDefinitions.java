@@ -3,12 +3,13 @@ package ttajiri.todayeats;
 import io.cucumber.java.en.*;
 
 import static com.codeborne.selenide.Condition.appear;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class StepDefinitions {
     private static final String BASE_URL    = System.getProperty("frontend.url", "http://localhost:8080/");
-    private static final String SETTINGS_URL = BASE_URL +  "/settings";
+    private static final String SETTINGS_URL = BASE_URL +  "#/settings";
 
     @Given("トップ画面を表示する")
     public void トップ画面を表示する() {
@@ -32,12 +33,14 @@ public class StepDefinitions {
 
     @When("好みのジャンルを選択する")
     public void 好みのジャンルを選択する() {
-        $("#category-list").selectRadio("1");
+        $("#settings__categories").selectOptionByValue("1");
+        $("button").click();
     }
 
     @Then("好みのジャンルが設定される")
     public void 好みのジャンルが設定される() {
-        $("#my-category").should(appear);
+        String selectedText = $("#settings__categories").getSelectedText();
+        $("#settings__my-category").should(text(selectedText));
     }
 
 }
