@@ -29,7 +29,6 @@ describe('Home.vue', () => {
   })
 
   describe('ボタンクリック時', () => {
-
     beforeAll(() => {
       HomeRepository.mockImplementation(() => ({
         getTodayEats: () => ({ data: { name: eats } })

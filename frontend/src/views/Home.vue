@@ -21,7 +21,7 @@ export default {
   },
   data: () => ({
     title: '今日のご飯を決めよう！',
-    eats: ''
+    eats: null
   }),
   methods: {
     async decideEats () {
