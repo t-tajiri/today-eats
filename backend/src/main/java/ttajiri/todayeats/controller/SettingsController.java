@@ -25,9 +25,13 @@ public class SettingsController {
         return ResponseEntity.ok(service.retrieveCategories());
     }
 
+    @GetMapping(path = "/mine")
+    public ResponseEntity<MyCategory> retrieveMyCategory() {
+        return ResponseEntity.ok(service.retrieveMyCategory());
+    }
+
     @PostMapping
     public ResponseEntity<URI> registerCategory(@RequestBody MyCategory category) {
-
         service.registerCategory(category);
 
         // @formatter:off

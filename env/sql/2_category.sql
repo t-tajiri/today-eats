@@ -6,11 +6,3 @@ CREATE TABLE
   )
 ;
 
-INSERT INTO
-  category (name)
-VALUES
-  ('全て')
-  , ('洋風')
-  , ('和風')
-  , ('中華')
-;

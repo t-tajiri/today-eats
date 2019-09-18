@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p id="settings__my-category">現在の設定は {{ myCategory }} になっています</p>
     <label for="settings__categories">好みのジャンル設定</label>
     <select
       id="settings__categories"
@@ -17,6 +16,12 @@
     <button @click="onClick">
       登録
     </button>
+    <p
+      v-if="myCategory"
+      id="settings__my-category"
+    >
+      現在の設定を {{ myCategory }} にしました！
+    </p>
   </div>
 </template>
 
@@ -28,15 +33,14 @@ export default {
   data: () => ({
     selected: null,
     categories: [],
-    myCategory: '設定なし',
+    myCategory: null,
     api: new SettingsRepository()
   }),
   async created () {
-    const { data } = await this.api.retrieveCategory()
-    this.categories = data
+    const [{ data: categories }, { data: myCategory }] = await Promise.all([ this.api.retrieveCategories(), this.api.retrieveMyCategory() ])
 
-    const allCategory = data.find(category => { return category.name === '全て' })
-    this.selected = allCategory.id
+    this.categories = categories
+    this.selected = myCategory.id
   },
   methods: {
     async onClick () {

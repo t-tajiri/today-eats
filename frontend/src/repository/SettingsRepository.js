@@ -14,8 +14,12 @@ export default class HomeRepository {
     })
   }
 
-  retrieveCategory () {
+  retrieveCategories () {
     return this.api.get(endpoint)
+  }
+
+  retrieveMyCategory () {
+    return this.api.get(endpoint + '/mine')
   }
 
   registerMyCategory (id) {

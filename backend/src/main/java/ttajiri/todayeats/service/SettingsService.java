@@ -11,7 +11,7 @@ import java.util.stream.*;
 @Service
 public class SettingsService {
 
-    // TODO 認証サービスと連携させて下記のユーザ名を削除すること
+    // TODO 認証サービスと連携した際は下記のユーザー名を削除すること
     private static final String USERNAME = "test";
 
     private CategoryRepository categoryRepository;
@@ -33,6 +33,15 @@ public class SettingsService {
                             })
                             .collect(Collectors.toUnmodifiableList());
         // @formatter:on
+    }
+
+    public MyCategory retrieveMyCategory() {
+        // ユーザー初回登録時に初期データとして登録するため、データが見つからない場合はエラーとする
+        var myCategory = myCategoryRepository.findById(USERNAME).orElseThrow(RuntimeException::new);
+
+        var result = new MyCategory();
+        result.setId(myCategory.getId());
+        return result;
     }
 
     public void registerCategory(MyCategory category) {
