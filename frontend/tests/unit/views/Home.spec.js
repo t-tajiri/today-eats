@@ -2,6 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import Home from '@/views/Home.vue'
 import Button from '@/components/Button.vue'
 import HomeRepository from '@/repository/HomeRepository.js'
+import SuggestedEats from '@/components/SuggestedEats.vue'
 
 const message = '今日のご飯を決めよう！'
 const eats = '🍛 カレーライス'
@@ -39,17 +40,31 @@ describe('Home.vue', () => {
       jest.restoreAllMocks()
     })
 
-    it('コンポーネント内のデータを変更する', async () => {
+    it('ボタンをクリックした時にコンポーネント内のデータを変更される', async () => {
       const wrapper = createShallowWrapper()
 
       const eatsBeforeClicked = wrapper.vm.eats
-      expect(eatsBeforeClicked).toBe('')
+      expect(eatsBeforeClicked).toBe(null)
 
       wrapper.find(Button).vm.$emit('click')
       await wrapper.vm.$nextTick()
 
       const eatsAfterClicked = wrapper.vm.eats
       expect(eatsAfterClicked).toBe(eats)
+    })
+
+    it('子コンポーネントからイベントが伝播されるとモーダルが切り替わる', async () => {
+      const wrapper = createShallowWrapper()
+
+      wrapper.find(Button).vm.$emit('click')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.showModal).toBe(true)
+
+      wrapper.find(SuggestedEats).vm.$emit('click')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.showModal).toBe(false)
     })
   })
 })

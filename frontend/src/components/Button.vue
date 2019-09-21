@@ -1,19 +1,22 @@
 <template>
   <button
+    class="px-4 py-2 rounded-lg"
     @click="onClick"
-    id="decide-eats"
     type="submit"
   >
-    {{ buttonName }}
+    {{ name }}
   </button>
 </template>
 
 <script>
 export default {
   name: 'Button',
-  data: () => ({
-    buttonName: 'ご飯を決める'
-  }),
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     onClick () {
       this.$emit('click')
