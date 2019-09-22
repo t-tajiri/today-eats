@@ -16,7 +16,7 @@ jobs:
             yarn install
       - save_cache:
           paths:
-            - node_modules
+            - frontend/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: unit test frontend
