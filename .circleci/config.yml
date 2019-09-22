@@ -9,13 +9,17 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-      - run: |
-        cd frontend
-        yarn install
+      - run:
+          name: install dependencies
+          command: |
+            cd frontend
+            yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: |
-        cd frontend
-        yarn test
+      - run:
+          name: unit test frontend
+          command: |
+            cd frontend
+            yarn test
