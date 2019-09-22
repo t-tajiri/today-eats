@@ -1,4 +1,6 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import 'vue-awesome/icons/info-circle'
+import Icon from 'vue-awesome/components/Icon'
 import Home from '@/views/Home.vue'
 import Button from '@/components/Button.vue'
 import HomeRepository from '@/repository/HomeRepository.js'
@@ -10,7 +12,10 @@ const eats = '🍛 カレーライス'
 // メソッドをモック化するために第2引数にモック関数を代入
 jest.mock('@/repository/HomeRepository.js', () => jest.fn())
 
-const createShallowWrapper = () => shallowMount(Home)
+const localVue = createLocalVue()
+localVue.component('v-icon', Icon)
+
+const createShallowWrapper = () => shallowMount(Home, { localVue })
 
 describe('Home.vue', () => {
   describe('初期表示', () => {

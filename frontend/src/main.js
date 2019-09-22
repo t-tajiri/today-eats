@@ -4,6 +4,7 @@ import router from './router'
 import '@/assets/tailwind.css'
 import 'vue-awesome/icons/utensils'
 import 'vue-awesome/icons/cog'
+import 'vue-awesome/icons/info-circle'
 import Icon from 'vue-awesome/components/Icon'
 
 Vue.component('v-icon', Icon)
