@@ -4,7 +4,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.*;
 import ttajiri.todayeats.model.*;
-import ttajiri.todayeats.repository.dto.*;
 import ttajiri.todayeats.service.*;
 
 import java.net.*;

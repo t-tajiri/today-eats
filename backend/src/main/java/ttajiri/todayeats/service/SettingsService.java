@@ -17,9 +17,9 @@ public class SettingsService {
     private CategoryRepository categoryRepository;
     private MyCategoryRepository myCategoryRepository;
 
-    public SettingsService(CategoryRepository categoryRepository, MyCategoryRepository myCategoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository) {
         this.myCategoryRepository = myCategoryRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Category> retrieveCategories() {
