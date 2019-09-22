@@ -22,4 +22,4 @@ jobs:
           name: unit test frontend
           command: |
             cd frontend
-            yarn test
+            yarn test:unit
