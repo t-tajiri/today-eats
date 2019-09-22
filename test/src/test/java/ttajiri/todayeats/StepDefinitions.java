@@ -3,7 +3,6 @@ package ttajiri.todayeats;
 import io.cucumber.java.en.*;
 
 import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -39,8 +38,7 @@ public class StepDefinitions {
 
     @Then("好みのジャンルが設定される")
     public void 好みのジャンルが設定される() {
-        String selectedText = $("#settings__categories").getSelectedText();
-        $("#settings__my-category").should(text(selectedText));
+        $("#settings__my-category").should(appear);
     }
 
 }
