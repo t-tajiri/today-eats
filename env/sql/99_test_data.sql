@@ -1,5 +1,5 @@
 INSERT INTO
-  today_eats (name, category)
+  today_eats (name, category_id)
 VALUES
     ('カレーライス', 2)
   , ('ハンバーグ', 2)
