@@ -19,6 +19,10 @@ export default class SettingsRepository extends BaseRepository {
     return this.api.get(endpoint + '/eats')
   }
 
+  registerEats (eats) {
+    return this.api.post(endpoint + '/eats', eats)
+  }
+
   updateEats (eats) {
     return this.api.put(endpoint + '/eats', eats)
   }

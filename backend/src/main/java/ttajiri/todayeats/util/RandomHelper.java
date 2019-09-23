@@ -12,6 +12,8 @@ public class RandomHelper {
         this.random = SecureRandom.getInstanceStrong();
     }
 
+    public int nextInt() { return Math.abs(random.nextInt()); }
+
     public int nextInt(int maxValue) {
         return random.nextInt(maxValue);
     }

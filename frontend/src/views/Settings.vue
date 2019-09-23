@@ -13,6 +13,7 @@
       <Eats
         :eats="eats"
         :form-categories="formCategories"
+        @registerEats="registerEats"
         @updateEats="updateEats"
         @deleteEats="deleteEats"
       />
@@ -73,6 +74,17 @@ export default {
       const { status } = await this.api.registerMyCategory(myCategory.id)
 
       if (status === SUCCESS_RESPONSE_CREATED) {
+        toggleNotify(this)
+      }
+    },
+    async registerEats (targetIndex) {
+      this.isNotified = false
+      const { status, headers } = await this.api.registerEats(this.eats[targetIndex])
+
+      if (status === SUCCESS_RESPONSE_CREATED) {
+        const id = headers.location.substr(headers.location.lastIndexOf('/') + 1)
+        this.eats[targetIndex].id = id
+        this.eats.push({ id: '', name: '', category_id: '' })
         toggleNotify(this)
       }
     },

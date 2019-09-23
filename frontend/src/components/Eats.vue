@@ -20,7 +20,7 @@
               type="text"
               placeholder="ご飯"
               v-model="eat.name"
-            />
+            >
           </div>
           <div class="table-cell px-4 py-2">
             <select
@@ -58,6 +58,19 @@
               />
             </div>
           </div>
+          <div
+            v-else
+            class="flex justify-center"
+          >
+            <div class="table-cell py-2 text-center">
+              <Button
+                @click="registerEats(index)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold"
+                :id="'settings__eats-register'"
+                name="登録"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -83,6 +96,9 @@ export default {
     }
   },
   methods: {
+    registerEats (index) {
+      this.$emit('registerEats', index)
+    },
     updateEats (index) {
       this.$emit('updateEats', index)
     },

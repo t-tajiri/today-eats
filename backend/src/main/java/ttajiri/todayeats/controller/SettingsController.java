@@ -10,7 +10,7 @@ import java.net.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(exposedHeaders = { "location" })
 @RequestMapping(value = "/settings")
 public class SettingsController {
     private SettingsService service;
@@ -45,6 +45,20 @@ public class SettingsController {
     @GetMapping(path = "/eats")
     public ResponseEntity<List<TodayEats>> retrieveEats() {
         return ResponseEntity.ok(service.retrieveEats());
+    }
+
+    @PostMapping(path = "/eats")
+    public ResponseEntity<URI> registerEats(@RequestBody TodayEats eats) {
+        var id = service.registerEats(eats);
+
+        // @formatter:off
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
+                                                  .path("/{id}")
+                                                  .buildAndExpand(id)
+                                                  .toUri();
+        // @formatter:on
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping(path = "/eats")

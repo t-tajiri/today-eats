@@ -4,6 +4,7 @@ import org.springframework.stereotype.*;
 import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
+import ttajiri.todayeats.util.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -18,11 +19,13 @@ public class SettingsService {
     private CategoryRepository categoryRepository;
     private MyCategoryRepository myCategoryRepository;
     private EatsRepository eatsRepository;
+    private RandomHelper randomHelper;
 
-    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository, EatsRepository eatsRepository) {
+    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository, EatsRepository eatsRepository, RandomHelper randomHelper) {
         this.myCategoryRepository = myCategoryRepository;
         this.categoryRepository = categoryRepository;
         this.eatsRepository = eatsRepository;
+        this.randomHelper = randomHelper;
     }
 
     public List<Category> retrieveCategories() {
@@ -70,6 +73,19 @@ public class SettingsService {
         entity.setCategoryId(dto.getCategoryId());
         return entity;
     };
+
+    public int registerEats(TodayEats eats) {
+        var id = randomHelper.nextInt();
+
+        var todayEatsDto = new TodayEatsDto();
+        todayEatsDto.setId(id);
+        todayEatsDto.setName(eats.getName());
+        todayEatsDto.setCategoryId(eats.getCategoryId());
+
+        eatsRepository.save(todayEatsDto);
+
+        return id;
+    }
 
     public void updateEats(TodayEats eats) {
         var todayEatsDto = new TodayEatsDto();
