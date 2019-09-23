@@ -15,18 +15,18 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.is;
 
-public class HomeServiceTest {
+public class EatsServiceTest {
 
     private static final Long CATEGORY_ALL = 1L;
     private static final Long CATEGORY_OTHER = 2L;
 
-    private HomeService target;
+    private EatsService target;
 
     @Mock
     private SettingsService settingsService;
 
     @Mock
-    private HomeRepository homeRepository;
+    private EatsRepository eatsRepository;
 
     @Mock
     private RandomHelper random;
@@ -34,7 +34,7 @@ public class HomeServiceTest {
     @Before
     public void setup() throws NoSuchAlgorithmException {
         MockitoAnnotations.initMocks(this);
-        target = new HomeService(settingsService, homeRepository, random);
+        target = new EatsService(settingsService, eatsRepository, random);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class HomeServiceTest {
         when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
 
         Iterable<TodayEatsDto> resultList = createData();
-        when(homeRepository.findAll()).thenReturn(resultList);
+        when(eatsRepository.findAll()).thenReturn(resultList);
         when(random.nextInt(3)).thenReturn(1);
 
         assertThat(target.retrieveTodayEats().getName(), is("pizza"));
@@ -57,7 +57,7 @@ public class HomeServiceTest {
         when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
 
         List<TodayEatsDto> resultList = createSpecifiedData();
-        when(homeRepository.findAllBy(CATEGORY_OTHER)).thenReturn(resultList);
+        when(eatsRepository.findAllBy(CATEGORY_OTHER)).thenReturn(resultList);
         when(random.nextInt(2)).thenReturn(1);
 
         assertThat(target.retrieveTodayEats().getName(), is("pasta"));
@@ -90,7 +90,7 @@ public class HomeServiceTest {
         when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
 
         Iterable<TodayEatsDto> resultList = Collections.emptyList();
-        when(homeRepository.findAll()).thenReturn(resultList);
+        when(eatsRepository.findAll()).thenReturn(resultList);
         when(random.nextInt(0)).thenThrow(new RuntimeException("空データの場合はこの処理は流れません"));
 
         assertThat(target.retrieveTodayEats(), is(nullValue()));

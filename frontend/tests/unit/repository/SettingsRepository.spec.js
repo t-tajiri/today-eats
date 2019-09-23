@@ -4,13 +4,16 @@ import SettingsRepository from '@/repository/SettingsRepository.js'
 
 const BASE_ENDPOINT = '/settings'
 const MYCATEGORY_ENDPOINT = BASE_ENDPOINT + '/mine'
+const EATS_ENDPOINT = BASE_ENDPOINT + '/eats'
 const categories = ['和風', '洋風', '中華']
 const myCategoryId = 1
 const Id = 2
+const eats = { id: Id, name: 'カレーライス', category_id: 1 }
 
 const status = {
   OK: 200,
-  CREATED: 204,
+  CREATED: 201,
+  NO_CONTENT: 204,
   INTERNAL_SERVER_ERROR: 500
 }
 
@@ -107,6 +110,72 @@ describe('SettingsRepostiory.js', () => {
 
       try {
         await api.registerMyCategory(Id)
+        // eslint-disable-next-line no-undef
+        fail('Internal Server Errorでエラー処理される必要があります')
+      } catch (error) {
+        expect(error.response.status).toBe(status.INTERNAL_SERVER_ERROR)
+      }
+    })
+  })
+  describe('GET /settings/eats', () => {
+    let mock
+    let api
+
+    beforeAll(() => {
+      mock = new MockAdapter(axios)
+      api = new SettingsRepository()
+    })
+
+    afterEach(() => {
+      mock.restore()
+    })
+
+    it('レスポンスが正常に返却される', async () => {
+      mock.onGet(EATS_ENDPOINT).reply(status.OK, eats)
+
+      const { data } = await api.retrieveEats()
+
+      expect(data).toEqual(eats)
+    })
+
+    it('Internal Server Errorの時エラーが発生する', async () => {
+      mock.onGet(EATS_ENDPOINT).reply(status.INTERNAL_SERVER_ERROR)
+
+      try {
+        await api.retrieveEats()
+        // eslint-disable-next-line no-undef
+        fail('Internal Server Errorでエラー処理される必要があります')
+      } catch (error) {
+        expect(error.response.status).toBe(status.INTERNAL_SERVER_ERROR)
+      }
+    })
+  })
+  describe('PUT /settings/eats', () => {
+    let mock
+    let api
+
+    beforeAll(() => {
+      mock = new MockAdapter(axios)
+      api = new SettingsRepository()
+    })
+
+    afterEach(() => {
+      mock.restore()
+    })
+
+    it('レスポンスが正常に返却される', async () => {
+      mock.onPut(EATS_ENDPOINT, eats).reply(status.NO_CONTENT)
+
+      const result = await api.updateEats(eats)
+
+      expect(result.status).toBe(status.NO_CONTENT)
+    })
+
+    it('Internal Server Errorの時エラーが発生する', async () => {
+      mock.onPut(EATS_ENDPOINT, eats).reply(status.INTERNAL_SERVER_ERROR)
+
+      try {
+        await api.updateEats(eats)
         // eslint-disable-next-line no-undef
         fail('Internal Server Errorでエラー処理される必要があります')
       } catch (error) {

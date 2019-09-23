@@ -8,10 +8,10 @@ import ttajiri.todayeats.service.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "today-eats")
-public class HomeController {
-    private HomeService service;
+public class EatsController {
+    private EatsService service;
 
-    public HomeController(HomeService service) {
+    public EatsController(EatsService service) {
         this.service = service;
     }
 

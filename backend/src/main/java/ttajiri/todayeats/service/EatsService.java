@@ -11,16 +11,16 @@ import java.util.function.*;
 import java.util.stream.*;
 
 @Service
-public class HomeService {
+public class EatsService {
     private static final Long CATEGORY_ALL = 1L;
 
     private SettingsService settingsService;
-    private HomeRepository homeRepository;
+    private EatsRepository eatsRepository;
     private RandomHelper random;
 
-    public HomeService(SettingsService settingsService, HomeRepository homeRepository, RandomHelper random) {
+    public EatsService(SettingsService settingsService, EatsRepository eatsRepository, RandomHelper random) {
         this.settingsService = settingsService;
-        this.homeRepository = homeRepository;
+        this.eatsRepository = eatsRepository;
         this.random = random;
     }
 
@@ -30,13 +30,13 @@ public class HomeService {
 
         if (CATEGORY_ALL.equals(myCategory)) {
             // @formatter:off
-             result = StreamSupport.stream(homeRepository.findAll().spliterator(), false)
+             result = StreamSupport.stream(eatsRepository.findAll().spliterator(), false)
                                    .map(dto -> convertDtoToEntity.apply(dto))
                                    .collect(Collectors.toUnmodifiableList());
             // @formatter:on
         } else {
             // @formatter:off
-            result = homeRepository.findAllBy(myCategory).stream()
+            result = eatsRepository.findAllBy(myCategory).stream()
                                                          .map(dto -> convertDtoToEntity.apply(dto))
                                                          .collect(Collectors.toUnmodifiableList());
             // @formatter:on

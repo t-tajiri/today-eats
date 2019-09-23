@@ -19,6 +19,9 @@ import java.util.*;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SettingsControllerTest {
 
     private static final String REQUEST_PATH = "/settings";
+    private static final String REQUEST_EATS_PATH = REQUEST_PATH + "/eats";
 
     private MockMvc mvc;
 
@@ -35,6 +39,9 @@ public class SettingsControllerTest {
 
     @InjectMocks
     private SettingsController target;
+
+    @Captor
+    private ArgumentCaptor<TodayEats> captor;
 
     @Before
     public void setup() {
@@ -78,7 +85,7 @@ public class SettingsControllerTest {
     }
 
     @Test
-    public void 設定したいカテゴリにリクエストを送るとHTTPステータスコード200とデータが返却される() throws Exception {
+    public void 設定したいカテゴリにリクエストを送るとHTTPステータスコード201とデータが返却される() throws Exception {
         var category = new MyCategory();
         category.setId(2L);
         category.setName("test");
@@ -91,5 +98,39 @@ public class SettingsControllerTest {
             .andExpect(status().isCreated())
             .andExpect(MockMvcResultMatchers.header().string("location", containsString(category.getId().toString())));
         // @formatter:on
+    }
+
+    @Test
+    public void 設定したご飯の一覧とHTTPステータスコード200が返却される() throws Exception {
+        var expected = new TodayEats();
+        expected.setName("test");
+        var eats = Collections.singletonList(expected);
+
+        when(service.retrieveEats()).thenReturn(eats);
+
+        // @formatter:off
+        mvc.perform(MockMvcRequestBuilders
+                    .get(REQUEST_EATS_PATH)
+                    .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value(expected.getName()));
+        // @formatter:on
+    }
+
+    @Test
+    public void 内容を変更したいご飯に対してリクエストを送るとHTTPステータスコード204が返却される() throws Exception {
+        var expected = new TodayEats();
+        expected.setName("test");
+
+        // @formatter:off
+        mvc.perform(MockMvcRequestBuilders
+                    .put(REQUEST_EATS_PATH)
+                    .content(new ObjectMapper().writeValueAsString(expected))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+        // @formatter:on
+
+        verify(service).updateEats(captor.capture());
+        assertThat(captor.getValue(), is(expected));
     }
 }

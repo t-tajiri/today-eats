@@ -18,16 +18,16 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(HomeController.class)
-public class HomeControllerTest {
+@WebMvcTest(EatsController.class)
+public class EatsControllerTest {
 
     private MockMvc mvc;
 
     @MockBean
-    private HomeService service;
+    private EatsService service;
 
     @InjectMocks
-    private HomeController target = new HomeController(service);
+    private EatsController target = new EatsController(service);
 
     @Before
     public void setup() {

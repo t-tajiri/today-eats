@@ -4,7 +4,6 @@ import org.springframework.stereotype.*;
 import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
-import ttajiri.todayeats.util.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -18,12 +17,12 @@ public class SettingsService {
 
     private CategoryRepository categoryRepository;
     private MyCategoryRepository myCategoryRepository;
-    private HomeRepository homeRepository;
+    private EatsRepository eatsRepository;
 
-    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository, HomeRepository homeRepository) {
+    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository, EatsRepository eatsRepository) {
         this.myCategoryRepository = myCategoryRepository;
         this.categoryRepository = categoryRepository;
-        this.homeRepository = homeRepository;
+        this.eatsRepository = eatsRepository;
     }
 
     public List<Category> retrieveCategories() {
@@ -58,7 +57,7 @@ public class SettingsService {
 
     public List<TodayEats> retrieveEats() {
         // @formatter:off
-         return StreamSupport.stream(homeRepository.findAll().spliterator(), false)
+         return StreamSupport.stream(eatsRepository.findAll().spliterator(), false)
                              .map(dto -> convertDtoToEntity.apply(dto))
                              .collect(Collectors.toUnmodifiableList());
         // @formatter:on
@@ -78,8 +77,8 @@ public class SettingsService {
         todayEatsDto.setName(eats.getName());
         todayEatsDto.setCategoryId(eats.getCategoryId());
 
-        if (homeRepository.existsById(eats.getId())) {
-            homeRepository.save(todayEatsDto);
+        if (eatsRepository.existsById(eats.getId())) {
+            eatsRepository.save(todayEatsDto);
         }
     }
 }

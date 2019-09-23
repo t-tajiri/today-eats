@@ -7,7 +7,7 @@ import ttajiri.todayeats.repository.dto.*;
 
 import java.util.*;
 
-public interface HomeRepository extends CrudRepository<TodayEatsDto, Integer> {
+public interface EatsRepository extends CrudRepository<TodayEatsDto, Integer> {
     @Query("SELECT t FROM #{#entityName} t WHERE t.categoryId = :id")
     List<TodayEatsDto> findAllBy(@Param("id") Long id);
 }
