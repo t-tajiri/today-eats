@@ -5,10 +5,13 @@ import io.cucumber.java.en.*;
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class StepDefinitions {
     private static final String BASE_URL     = System.getProperty("frontend.url", "http://localhost:8080/");
     private static final String SETTINGS_URL = BASE_URL +  "#/settings";
+
+    private String candidateForDelete = "";
 
     @Given("トップ画面を表示する")
     public void トップ画面を表示する() {
@@ -49,5 +52,16 @@ public class StepDefinitions {
     @When("変更ボタンを押す")
     public void 変更ボタンを押す() {
         $("#settings__eats-update-1").click();
+    }
+
+    @When("削除したいご飯の削除ボタンを押す")
+    public void 削除したいご飯の削除ボタンを押す() {
+        candidateForDelete = $("#settings__eats-name-1").getValue();
+        $("#settings__eats-delete-1").click();
+    }
+
+    @Then("削除したいご飯が一覧から消えている")
+    public void 削除したいご飯が一覧から消えている() {
+        assertNotEquals(candidateForDelete, $("#settings__eats-name-1").getValue());
     }
 }
