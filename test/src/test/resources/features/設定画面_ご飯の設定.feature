@@ -9,7 +9,6 @@ Feature: 設定画面_ご飯の設定
     When 変更ボタンを押す
     Then 設定が保存される
 
-  @develop
   Scenario: 好きなご飯の登録を解除する
     When 削除したいご飯の削除ボタンを押す
     Then 設定が保存される

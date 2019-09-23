@@ -53,4 +53,11 @@ public class SettingsController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping(path = "/eats/{id}")
+    public ResponseEntity<URI> deleteEats(@PathVariable Integer id) {
+        service.deleteEats(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -22,4 +22,8 @@ export default class SettingsRepository extends BaseRepository {
   updateEats (eats) {
     return this.api.put(endpoint + '/eats', eats)
   }
+
+  deleteEats (id) {
+    return this.api.delete(endpoint + `/eats/${id}`)
+  }
 }

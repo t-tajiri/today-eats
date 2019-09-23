@@ -14,6 +14,7 @@
         :eats="eats"
         :form-categories="formCategories"
         @updateEats="updateEats"
+        @deleteEats="deleteEats"
       />
     </div>
     <Notification
@@ -80,6 +81,16 @@ export default {
       const { status } = await this.api.updateEats(this.eats[targetIndex])
 
       if (status === SUCCESS_RESPONSE_NO_CONTENT) {
+        toggleNotify(this)
+      }
+    },
+    async deleteEats (targetIndex) {
+      this.isNotified = false
+      const id = this.eats[targetIndex].id
+      const { status } = await this.api.deleteEats(id)
+
+      if (status === SUCCESS_RESPONSE_NO_CONTENT) {
+        this.eats = this.eats.filter(eat => eat.id !== id)
         toggleNotify(this)
       }
     }

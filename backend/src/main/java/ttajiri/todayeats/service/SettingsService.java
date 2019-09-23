@@ -81,4 +81,11 @@ public class SettingsService {
             eatsRepository.save(todayEatsDto);
         }
     }
+
+    public void deleteEats(Integer id) {
+        var todayEatsDto = new TodayEatsDto();
+        todayEatsDto.setId(id);
+
+        eatsRepository.delete(todayEatsDto);
+    }
 }

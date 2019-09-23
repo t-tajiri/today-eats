@@ -51,6 +51,7 @@
             </div>
             <div class="table-cell py-2 text-center">
               <Button
+                @click="deleteEats(index)"
                 class="bg-red-500 hover:bg-red-700 text-white font-bold"
                 :id="'settings__eats-delete-' + (index + 1)"
                 name="削除"
@@ -84,6 +85,9 @@ export default {
   methods: {
     updateEats (index) {
       this.$emit('updateEats', index)
+    },
+    deleteEats (index) {
+      this.$emit('deleteEats', index)
     }
   }
 }
