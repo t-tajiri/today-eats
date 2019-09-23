@@ -41,4 +41,16 @@ public class SettingsController {
         // @formatter:on
         return ResponseEntity.created(location).build();
     }
+
+    @GetMapping(path = "/eats")
+    public ResponseEntity<List<TodayEats>> retrieveEats() {
+        return ResponseEntity.ok(service.retrieveEats());
+    }
+
+    @PutMapping(path = "/eats")
+    public ResponseEntity<URI> updateEats(@RequestBody TodayEats eats) {
+        service.updateEats(eats);
+
+        return ResponseEntity.noContent().build();
+    }
 }

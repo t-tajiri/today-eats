@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Table(name = "today_eats")
 public class TodayEatsDto {
     @Id
+    private Integer id;
+
     private String name;
 
     private Long categoryId;

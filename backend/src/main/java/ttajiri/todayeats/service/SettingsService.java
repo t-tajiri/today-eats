@@ -4,8 +4,10 @@ import org.springframework.stereotype.*;
 import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
+import ttajiri.todayeats.util.*;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 @Service
@@ -16,10 +18,12 @@ public class SettingsService {
 
     private CategoryRepository categoryRepository;
     private MyCategoryRepository myCategoryRepository;
+    private HomeRepository homeRepository;
 
-    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository) {
+    public SettingsService(MyCategoryRepository myCategoryRepository, CategoryRepository categoryRepository, HomeRepository homeRepository) {
         this.myCategoryRepository = myCategoryRepository;
         this.categoryRepository = categoryRepository;
+        this.homeRepository = homeRepository;
     }
 
     public List<Category> retrieveCategories() {
@@ -52,4 +56,30 @@ public class SettingsService {
         myCategoryRepository.save(myCategory);
     }
 
+    public List<TodayEats> retrieveEats() {
+        // @formatter:off
+         return StreamSupport.stream(homeRepository.findAll().spliterator(), false)
+                             .map(dto -> convertDtoToEntity.apply(dto))
+                             .collect(Collectors.toUnmodifiableList());
+        // @formatter:on
+    }
+
+    private Function<TodayEatsDto, TodayEats> convertDtoToEntity = (TodayEatsDto dto) -> {
+        var entity = new TodayEats();
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setCategoryId(dto.getCategoryId());
+        return entity;
+    };
+
+    public void updateEats(TodayEats eats) {
+        var todayEatsDto = new TodayEatsDto();
+        todayEatsDto.setId(eats.getId());
+        todayEatsDto.setName(eats.getName());
+        todayEatsDto.setCategoryId(eats.getCategoryId());
+
+        if (homeRepository.existsById(eats.getId())) {
+            homeRepository.save(todayEatsDto);
+        }
+    }
 }

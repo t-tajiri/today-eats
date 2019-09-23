@@ -48,6 +48,7 @@ public class StepDefinitions {
 
     @When("変更ボタンを押す")
     public void 変更ボタンを押す() {
-        $("#settings__eats-update-1").click();
+        //TODO using double click for workaround. so should use single click.
+        $("#settings__eats-update-1").doubleClick();
     }
 }
