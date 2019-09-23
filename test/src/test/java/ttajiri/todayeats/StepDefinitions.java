@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class StepDefinitions {
-    private static final String BASE_URL    = System.getProperty("frontend.url", "http://localhost:8080/");
+    private static final String BASE_URL     = System.getProperty("frontend.url", "http://localhost:8080/");
     private static final String SETTINGS_URL = BASE_URL +  "#/settings";
 
     @Given("トップ画面を表示する")
@@ -36,9 +36,18 @@ public class StepDefinitions {
         $("button").click();
     }
 
-    @Then("好みのジャンルが設定される")
-    public void 好みのジャンルが設定される() {
-        $("#settings__my-category").should(appear);
+    @Then("設定が保存される")
+    public void 設定が保存される() {
+        $("#settings__notification").should(appear);
     }
 
+    @When("ご飯の登録内容を変更する")
+    public void ご飯の登録内容を変更する() {
+        $("#settings__eats-name-1").should(appear).setValue("変更したよ！");
+    }
+
+    @When("変更ボタンを押す")
+    public void 変更ボタンを押す() {
+        $("#settings__eats-update-1").click();
+    }
 }
