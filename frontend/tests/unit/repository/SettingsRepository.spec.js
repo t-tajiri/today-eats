@@ -183,4 +183,5 @@ describe('SettingsRepostiory.js', () => {
       }
     })
   })
+  describe.skip('DELETE /settings/eats', () => {})
 })

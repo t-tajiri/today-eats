@@ -41,7 +41,10 @@ public class SettingsControllerTest {
     private SettingsController target;
 
     @Captor
-    private ArgumentCaptor<TodayEats> captor;
+    private ArgumentCaptor<TodayEats> todayEatsCaptor;
+
+    @Captor
+    private ArgumentCaptor<Integer> idCaptor;
 
     @Before
     public void setup() {
@@ -130,7 +133,22 @@ public class SettingsControllerTest {
             .andExpect(status().isNoContent());
         // @formatter:on
 
-        verify(service).updateEats(captor.capture());
-        assertThat(captor.getValue(), is(expected));
+        verify(service).updateEats(todayEatsCaptor.capture());
+        assertThat(todayEatsCaptor.getValue(), is(expected));
+    }
+
+    @Test
+    public void 内容を削除したいご飯に対してリクエストを送るとHTTPステータスコード204が返却される() throws Exception {
+        int expected = 1;
+
+        // @formatter:off
+        mvc.perform(MockMvcRequestBuilders
+                    .delete(REQUEST_EATS_PATH + "/" + expected)
+                    .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+        // @formatter:on
+
+        verify(service).deleteEats(idCaptor.capture());
+        assertThat(idCaptor.getValue(), is(expected));
     }
 }

@@ -13,4 +13,12 @@ describe('Eats.vue', () => {
 
     expect(wrapper.emitted().updateEats[0][0]).toBe(0)
   })
+
+  it.skip('ご飯の内容を削除できる', () => {
+    const wrapper = createWrapper()
+
+    wrapper.find('#settings__eats-delete-1').vm.$emit('click')
+
+    expect(wrapper.emitted().deleteEats[0][0]).toBe(0)
+  })
 })

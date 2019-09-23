@@ -136,4 +136,12 @@ public class SettingsServiceTest {
 
         verify(eatsRepository, never()).save(any(TodayEatsDto.class));
     }
+
+    @Test
+    public void ご飯の内容が削除される() {
+        target.deleteEats(ID);
+
+        verify(eatsRepository).delete(todayEatsDtoCaptor.capture());
+        assertThat(todayEatsDtoCaptor.getValue().getId(), is(ID));
+    }
 }
