@@ -4,6 +4,7 @@ import io.cucumber.java.en.*;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -12,6 +13,7 @@ public class StepDefinitions {
     private static final String SETTINGS_URL = BASE_URL +  "#/settings";
 
     private String candidateForDelete = "";
+    private int insertPosition = 0;
 
     @Given("トップ画面を表示する")
     public void トップ画面を表示する() {
@@ -42,6 +44,22 @@ public class StepDefinitions {
     @Then("設定が保存される")
     public void 設定が保存される() {
         $("#settings__notification").should(appear);
+    }
+
+    @When("ご飯を入力する")
+    public void ご飯を入力する() {
+        insertPosition = $$("input[id^=settings__eats-name]").size();
+        $("#settings__eats-name-" + insertPosition).setValue("カレーうどん");
+    }
+
+    @When("カテゴリを選択する")
+    public void カテゴリを選択する() {
+        $("#settings__eats-category-" + insertPosition).selectOptionContainingText("和風");
+    }
+
+    @When("ご飯を登録するボタンを押す")
+    public void ご飯を登録するボタンを押す() {
+        $("#settings__eats-register").click();
     }
 
     @When("ご飯の登録内容を変更する")
