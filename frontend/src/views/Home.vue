@@ -42,14 +42,14 @@ export default {
     SuggestedEats
   },
   data: () => ({
-    title: '今日のご飯を決めよう！',
+    api: new HomeRepository(),
     eats: null,
-    showModal: false
+    showModal: false,
+    title: '今日のご飯を決めよう！'
   }),
   methods: {
     async decideEats () {
-      const api = new HomeRepository()
-      const { data } = await api.getTodayEats()
+      const { data } = await this.api.getTodayEats()
       this.eats = data.name
 
       this.showModal = true
