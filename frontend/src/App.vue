@@ -2,12 +2,14 @@
   <div id="app">
     <Header />
     <main>
-      <transition
-        name="fade"
-        mode="out-in"
-      >
-        <router-view />
-      </transition>
+      <ErrorBoundary>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view />
+        </transition>
+      </ErrorBoundary>
     </main>
   </div>
 </template>
