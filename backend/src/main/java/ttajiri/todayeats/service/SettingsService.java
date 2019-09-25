@@ -1,6 +1,7 @@
 package ttajiri.todayeats.service;
 
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
@@ -73,6 +74,7 @@ public class SettingsService {
         return entity;
     };
 
+    @Transactional(rollbackFor = Exception.class)
     public int registerEats(TodayEats eats) {
         var id = randomHelper.nextInt();
 
@@ -86,6 +88,7 @@ public class SettingsService {
         return id;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void updateEats(TodayEats eats) {
         var todayEatsDto = new TodayEatsDto();
         todayEatsDto.setId(eats.getId());
@@ -97,6 +100,7 @@ public class SettingsService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void deleteEats(Integer id) {
         var todayEatsDto = new TodayEatsDto();
         todayEatsDto.setId(id);
