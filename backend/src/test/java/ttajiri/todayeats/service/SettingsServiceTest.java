@@ -5,6 +5,7 @@ import org.mockito.*;
 import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
+import ttajiri.todayeats.util.*;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class SettingsServiceTest {
 
     private static final int ID = 1;
     private static final String NAME = "test";
-    private static final long CATEGORY_ID = 2L;
+    private static final int CATEGORY_ID = 2;
     private static final String CATEGORY_NAME = "testCategory";
 
     private SettingsService target;
@@ -35,6 +36,9 @@ public class SettingsServiceTest {
     @Mock
     private EatsRepository eatsRepository;
 
+    @Mock
+    private RandomHelper randomHelper;
+
     @Captor
     private ArgumentCaptor<MyCategoryDto> myCategoryDtoCaptor;
 
@@ -44,7 +48,7 @@ public class SettingsServiceTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        target = new SettingsService(myCategoryRepository, categoryRepository, eatsRepository);
+        target = new SettingsService(myCategoryRepository, categoryRepository, eatsRepository, randomHelper);
     }
 
     @Test
