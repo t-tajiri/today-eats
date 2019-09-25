@@ -2,7 +2,6 @@ package ttajiri.todayeats.service;
 
 import org.junit.*;
 import org.mockito.*;
-import ttajiri.todayeats.model.*;
 import ttajiri.todayeats.repository.*;
 import ttajiri.todayeats.repository.dto.*;
 import ttajiri.todayeats.util.*;
@@ -14,6 +13,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.is;
+import static ttajiri.todayeats.auth.UserService.USERNAME;
 
 public class EatsServiceTest {
 
@@ -23,7 +23,7 @@ public class EatsServiceTest {
     private EatsService target;
 
     @Mock
-    private SettingsService settingsService;
+    private MyCategoryRepository myCategoryRepository;
 
     @Mock
     private EatsRepository eatsRepository;
@@ -34,14 +34,16 @@ public class EatsServiceTest {
     @Before
     public void setup() throws NoSuchAlgorithmException {
         MockitoAnnotations.initMocks(this);
-        target = new EatsService(settingsService, eatsRepository, random);
+        target = new EatsService(myCategoryRepository, eatsRepository, random);
     }
 
     @Test
     public void 複数個のデータから特定のデータが返却される() {
-        var myCategory = new MyCategory();
-        myCategory.setId(CATEGORY_ALL);
-        when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
+        var m = new MyCategoryDto();
+        m.setId(CATEGORY_ALL);
+        var myCategory = Optional.of(m);
+
+        when(myCategoryRepository.findById(USERNAME)).thenReturn(myCategory);
 
         Iterable<TodayEatsDto> resultList = createData();
         when(eatsRepository.findAll()).thenReturn(resultList);
@@ -52,9 +54,11 @@ public class EatsServiceTest {
 
     @Test
     public void カテゴリの指定がある場合はカテゴリの中から抽出されたデータの中から特定のデータが返却される() {
-        var myCategory = new MyCategory();
-        myCategory.setId(CATEGORY_OTHER);
-        when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
+        var m = new MyCategoryDto();
+        m.setId(CATEGORY_OTHER);
+        var myCategory = Optional.of(m);
+
+        when(myCategoryRepository.findById(USERNAME)).thenReturn(myCategory);
 
         List<TodayEatsDto> resultList = createSpecifiedData();
         when(eatsRepository.findAllBy(CATEGORY_OTHER)).thenReturn(resultList);
@@ -85,9 +89,11 @@ public class EatsServiceTest {
 
     @Test
     public void 空のデータの場合はnullが返却される() {
-        var myCategory = new MyCategory();
-        myCategory.setId(CATEGORY_ALL);
-        when(settingsService.retrieveMyCategory()).thenReturn(myCategory);
+        var m = new MyCategoryDto();
+        m.setId(CATEGORY_ALL);
+        var myCategory = Optional.of(m);
+
+        when(myCategoryRepository.findById(USERNAME)).thenReturn(myCategory);
 
         Iterable<TodayEatsDto> resultList = Collections.emptyList();
         when(eatsRepository.findAll()).thenReturn(resultList);

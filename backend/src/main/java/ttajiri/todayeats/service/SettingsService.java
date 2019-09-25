@@ -10,11 +10,10 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import static ttajiri.todayeats.auth.UserService.USERNAME;
+
 @Service
 public class SettingsService {
-
-    // TODO 認証サービスと連携した際は下記のユーザー名を削除すること
-    private static final String USERNAME = "test";
 
     private CategoryRepository categoryRepository;
     private MyCategoryRepository myCategoryRepository;

@@ -10,24 +10,27 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import static ttajiri.todayeats.auth.UserService.USERNAME;
+
 @Service
 public class EatsService {
     private static final Integer CATEGORY_ALL = 1;
 
-    private SettingsService settingsService;
+    private MyCategoryRepository myCategoryRepository;
     private EatsRepository eatsRepository;
     private RandomHelper random;
 
-    public EatsService(SettingsService settingsService, EatsRepository eatsRepository, RandomHelper random) {
-        this.settingsService = settingsService;
+    public EatsService(MyCategoryRepository myCategoryRepository, EatsRepository eatsRepository, RandomHelper random) {
+        this.myCategoryRepository = myCategoryRepository;
         this.eatsRepository = eatsRepository;
         this.random = random;
     }
 
     public TodayEats retrieveTodayEats() {
-        var myCategory = settingsService.retrieveMyCategory().getId();
-        List<TodayEats> result;
+        var m = myCategoryRepository.findById(USERNAME).orElseThrow(RuntimeException::new);
+        var myCategory = m.getId();
 
+        List<TodayEats> result;
         if (CATEGORY_ALL.equals(myCategory)) {
             // @formatter:off
              result = StreamSupport.stream(eatsRepository.findAll().spliterator(), false)
