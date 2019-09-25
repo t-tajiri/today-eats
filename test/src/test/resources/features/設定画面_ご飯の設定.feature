@@ -4,7 +4,6 @@ Feature: 設定画面_ご飯の設定
   Background:
     Given 設定画面を表示する
 
-  @develop
   Scenario: 好きなご飯を登録する
     When ご飯を入力する
     When カテゴリを選択する

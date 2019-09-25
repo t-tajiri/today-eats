@@ -2,6 +2,7 @@ package ttajiri.todayeats;
 
 import io.cucumber.java.en.*;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -48,7 +49,7 @@ public class StepDefinitions {
 
     @When("ご飯を入力する")
     public void ご飯を入力する() {
-        insertPosition = $$("input[id^=settings__eats-name]").size();
+        insertPosition = $$("input[id^=settings__eats-name]").shouldBe(sizeGreaterThan(0)).size();
         $("#settings__eats-name-" + insertPosition).setValue("カレーうどん");
     }
 
