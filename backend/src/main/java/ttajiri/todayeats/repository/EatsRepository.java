@@ -9,5 +9,5 @@ import java.util.*;
 
 public interface EatsRepository extends CrudRepository<TodayEatsDto, Integer> {
     @Query("SELECT t FROM #{#entityName} t WHERE t.categoryId = :id")
-    List<TodayEatsDto> findAllBy(@Param("id") Long id);
+    List<TodayEatsDto> findAllBy(@Param("id") Integer id);
 }

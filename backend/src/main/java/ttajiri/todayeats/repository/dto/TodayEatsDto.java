@@ -13,5 +13,5 @@ public class TodayEatsDto {
 
     private String name;
 
-    private Long categoryId;
+    private Integer categoryId;
 }

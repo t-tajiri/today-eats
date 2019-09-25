@@ -12,7 +12,7 @@ import java.util.stream.*;
 
 @Service
 public class EatsService {
-    private static final Long CATEGORY_ALL = 1L;
+    private static final Integer CATEGORY_ALL = 1;
 
     private SettingsService settingsService;
     private EatsRepository eatsRepository;

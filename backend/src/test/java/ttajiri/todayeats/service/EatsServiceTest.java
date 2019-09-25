@@ -17,8 +17,8 @@ import static org.hamcrest.Matchers.is;
 
 public class EatsServiceTest {
 
-    private static final Long CATEGORY_ALL = 1L;
-    private static final Long CATEGORY_OTHER = 2L;
+    private static final Integer CATEGORY_ALL = 1;
+    private static final Integer CATEGORY_OTHER = 2;
 
     private EatsService target;
 

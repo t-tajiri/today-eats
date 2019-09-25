@@ -11,7 +11,7 @@ public class MyCategoryDto {
     @Id
     private String username;
 
-    private Long id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "id", insertable = false, updatable = false)

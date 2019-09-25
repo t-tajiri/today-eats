@@ -56,7 +56,7 @@ public class SettingsControllerTest {
     public void カテゴリ一覧にリクエストを送るとHTTPステータスコード200とデータが返却される() throws Exception {
         var categories = new ArrayList<Category>();
         var category = new Category();
-        category.setId(1L);
+        category.setId(1);
         categories.add(category);
 
         when(service.retrieveCategories()).thenReturn(categories);
@@ -74,7 +74,7 @@ public class SettingsControllerTest {
     @Test
     public void 自分のカテゴリにリクエストを送るとHTTPステータスコード200とデータが返却される() throws Exception {
         var category = new MyCategory();
-        category.setId(1L);
+        category.setId(1);
 
         when(service.retrieveMyCategory()).thenReturn(category);
 
@@ -90,7 +90,7 @@ public class SettingsControllerTest {
     @Test
     public void 設定したいカテゴリにリクエストを送るとHTTPステータスコード201とデータが返却される() throws Exception {
         var category = new MyCategory();
-        category.setId(2L);
+        category.setId(2);
         category.setName("test");
 
         // @formatter:off

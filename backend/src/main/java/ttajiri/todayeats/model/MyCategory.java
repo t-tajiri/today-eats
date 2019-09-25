@@ -7,7 +7,7 @@ import lombok.*;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MyCategory {
-    private Long id;
+    private Integer id;
 
     private String name;
 }

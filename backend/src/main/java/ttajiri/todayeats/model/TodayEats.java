@@ -11,5 +11,5 @@ public class TodayEats {
     private String name;
 
     @JsonProperty("category_id")
-    private Long categoryId;
+    private Integer categoryId;
 }
