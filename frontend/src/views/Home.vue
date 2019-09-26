@@ -33,7 +33,7 @@
 <script>
 import Button from '@/components/Button.vue'
 import SuggestedEats from '@/components/SuggestedEats.vue'
-import HomeRepository from '@/repository/HomeRepository.js'
+import EatsRepository from '@/repository/EatsRepository.js'
 
 export default {
   name: 'Home',
@@ -42,7 +42,7 @@ export default {
     SuggestedEats
   },
   data: () => ({
-    api: new HomeRepository(),
+    api: new EatsRepository(),
     eats: null,
     showModal: false,
     title: '今日のご飯を決めよう！'

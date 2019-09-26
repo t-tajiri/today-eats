@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import HomeRepository from '@/repository/HomeRepository.js'
+import EatsRepository from '@/repository/EatsRepository.js'
 
 const endpoint = '/today-eats'
 const eats = 'ハンバーガー🍔'
@@ -17,7 +17,7 @@ describe('HomeRepostiory.js', () => {
 
     beforeAll(() => {
       mock = new MockAdapter(axios)
-      api = new HomeRepository()
+      api = new EatsRepository()
     })
 
     afterEach(() => {
