@@ -1,9 +1,11 @@
 package ttajiri.todayeats.controller;
 
 import org.springframework.http.*;
+import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.*;
 import ttajiri.todayeats.model.*;
+import ttajiri.todayeats.model.validation.*;
 import ttajiri.todayeats.service.*;
 
 import java.net.*;
@@ -30,7 +32,7 @@ public class SettingsController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> registerCategory(@RequestBody MyCategory category) {
+    public ResponseEntity<URI> registerCategory(@RequestBody @Validated MyCategory category) {
         service.registerCategory(category);
 
         // @formatter:off
@@ -48,7 +50,7 @@ public class SettingsController {
     }
 
     @PostMapping(path = "/eats")
-    public ResponseEntity<URI> registerEats(@RequestBody TodayEats eats) {
+    public ResponseEntity<URI> registerEats(@RequestBody @Validated(Insert.class) TodayEats eats) {
         var id = service.registerEats(eats);
 
         // @formatter:off
@@ -62,7 +64,7 @@ public class SettingsController {
     }
 
     @PutMapping(path = "/eats")
-    public ResponseEntity<URI> updateEats(@RequestBody TodayEats eats) {
+    public ResponseEntity<URI> updateEats(@RequestBody @Validated(Update.class) TodayEats eats) {
         service.updateEats(eats);
 
         return ResponseEntity.noContent().build();

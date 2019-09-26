@@ -8,6 +8,9 @@ export default class BaseRepository {
         'Access-Control-Allow-Origin': process.env.VUE_APP_BACKEND_URL,
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': process.env.VUE_APP_BACKEND_URL
+      },
+      validateStatus: (status) => {
+        return (status >= 200 && status < 300) || status === 400
       }
     })
   }

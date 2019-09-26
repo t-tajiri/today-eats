@@ -123,7 +123,9 @@ public class SettingsControllerTest {
     @Test
     public void 内容を変更したいご飯に対してリクエストを送るとHTTPステータスコード204が返却される() throws Exception {
         var expected = new TodayEats();
+        expected.setId(1);
         expected.setName("test");
+        expected.setCategoryId(1);
 
         // @formatter:off
         mvc.perform(MockMvcRequestBuilders

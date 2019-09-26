@@ -19,7 +19,7 @@
               :id="'settings__eats-name-' + (index + 1)"
               type="text"
               placeholder="ご飯"
-              v-model="eat.name"
+              v-model.trim="eat.name"
             >
           </div>
           <div class="table-cell px-4 py-2">
