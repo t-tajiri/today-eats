@@ -11,9 +11,6 @@
         <p class="text-red-500">
           エラー内容: {{ error.message }}
         </p>
-        <p class="text-red-500">
-          詳細: {{ error.stack }}
-        </p>
       </div>
     </div>
     <slot v-else />
