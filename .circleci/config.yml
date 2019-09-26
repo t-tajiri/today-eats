@@ -8,7 +8,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
           command: |
@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           paths:
             - frontend/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: dependencies-{{ checksum "package.json" }}
       - run:
           name: unit test frontend
           command: |
