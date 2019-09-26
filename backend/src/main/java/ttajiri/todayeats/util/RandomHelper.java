@@ -12,7 +12,7 @@ public class RandomHelper {
         this.random = SecureRandom.getInstanceStrong();
     }
 
-    public int nextInt() { return Math.abs(random.nextInt()); }
+    public int nextInt() { return random.nextInt(Integer.MAX_VALUE) + 1; }
 
     public int nextInt(int maxValue) {
         return random.nextInt(maxValue);
