@@ -1,10 +1,10 @@
 <template>
-  <transition
+  <transition-group
     name="toast"
-    mode="out-in"
   >
     <div
       class="flex fixed right-0 w-3/12 m-8 py-2 items-center rounded bg-blue-500 text-white text-sm font-bold"
+      key="notified"
       role="alert"
       v-if="isNotified"
     >
@@ -21,6 +21,7 @@
     </div>
     <div
       class="flex fixed right-0 w-3/12 m-8 py-2 items-center rounded bg-red-500 text-white text-sm font-bold"
+      key="error"
       role="alert"
       v-if="!isValid"
     >
@@ -38,7 +39,7 @@
         </span>
       </div>
     </div>
-  </transition>
+  </transition-group>
 </template>
 
 <script>
